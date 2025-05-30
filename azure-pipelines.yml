@@ -1,18 +1,18 @@
 trigger:
   branches:
     include:
-      - main  # or any branch you want to trigger from
+      - main  # Triggers pipeline when code is pushed to 'main'
 
 pool:
-  name: Default  # Your agent pool name
+  name: Default
   demands:
-    - Agent.Name -equals opsi  # This will ensure it runs on your "opsi" agent
+    - Agent.Name -equals opsi  # Ensures the job runs on the agent named 'opsi'
 
 variables:
-- group: opsi-credentials  # This loads all your secret and non-secret variables
+- group: opsi-credentials  # Make sure this group exists and includes all required variables
 
 steps:
-- task: Checkout@1
+- checkout: self  # Use correct keyword instead of 'task: Checkout@1'
   displayName: "Checkout code"
 
 - script: chmod +x scripts/deploy_opsi.sh
